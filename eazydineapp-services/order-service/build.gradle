@@ -1,0 +1,49 @@
+buildscript {
+    ext { springBootVersion = '2.1.0.RELEASE' }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+mainClassName = 'com.eazydineapp.order.OrderServiceMain'
+applicationName = 'eazydineapp-services'
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework:spring-webmvc'
+    
+    runtime('org.springframework.boot:spring-boot-starter-logging')
+    
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.testng:testng:6.14.3'
+}
+
+jar {
+    baseName = 'eazydineapp-services'
+    version = project.property("app.version")
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+bootJar {
+    launchScript()
+}
